@@ -108,7 +108,7 @@ CHAT_ID="your-chat-id"
 
 ---
 
-## 📩 Example Telegram Notification
+<h2 id="example-telegram-notification">✅ Example Telegram Notification</h2>
 
 ```
 ✅ Immich backup succeeded on srv-photo at Thu 12 Jun 2025, 04:44:45, CEST
