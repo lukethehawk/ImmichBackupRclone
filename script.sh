@@ -2,26 +2,26 @@
 
 # === CONFIGURATION ===
 SOURCE="/root/immich-app/library/library" 	# Path to the local Immich library
-DEST="proton:Immich" 						# rclone remote destination (must be configured)
+DEST="proton:Immich" 						            # rclone remote destination (must be configured)
 
 # Define user folders (replace with your actual subfolders)
-USER1_NAME="User1" 							# Display name for first user
-USER2_NAME="User2"							# Display name for second user
+USER1_NAME="User1" 							      # Display name for first user
+USER2_NAME="User2"							      # Display name for second user
 USER1_PATH="$SOURCE/user1_folder"			# Local path to first user's subfolder
 USER2_PATH="$SOURCE/user2_folder"			# Local path to second user's subfolder
 LOGDIR="/root/log"
-mkdir -p "$LOGDIR"							# Ensure log directory exists
+mkdir -p "$LOGDIR"							      # Ensure log directory exists
 
 # Delete logs older than 20 days
 find "$LOGDIR" -type f -name 'log_immich_*.txt' -mtime +20 -delete		# Remove old logs (older than 20 days)
 
 # Create log files
 MAINLOGFILE="$LOGDIR/log_immich_$(date +%F).txt"		# Daily log file
-TEMPLOGFILE=$(mktemp)									# Temporary log file for current run
+TEMPLOGFILE=$(mktemp)									              # Temporary log file for current run
 
 # === TELEGRAM NOTIFICATION CONFIGURATION ===
 BOT_TOKEN="INSERT_YOUR_TELEGRAM_BOT_TOKEN"				# Telegram bot token (insert your own)
-CHAT_ID="INSERT_YOUR_CHAT_ID"							# Telegram chat ID (insert your own)
+CHAT_ID="INSERT_YOUR_CHAT_ID"							        # Telegram chat ID (insert your own)
 
 # === EXECUTE BACKUP ===
 # Start rclone backup with parameters
@@ -107,10 +107,11 @@ fi
 {
   grep 'Copied (new)' "$TEMPLOGFILE"
   echo ""
-  awk '/Transferred:/ {a=$0} /Checks:/ {b=$0} /Elapsed time:/ {c=$0} END {print a "\n" b "\n" c}' "$TEMPLOGFILE"
+  tail -100 "$TEMPLOGFILE" | grep -E 'Transferred:|Checks:|Elapsed time:'
 } > "$MAINLOGFILE"
 
 rm "$TEMPLOGFILE"
+
 # Clean up temporary log
 
 # === SEND TELEGRAM NOTIFICATION ===
