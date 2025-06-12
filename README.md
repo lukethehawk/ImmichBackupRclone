@@ -12,11 +12,10 @@ An advanced `rclone`-based backup script for [Immich](https://github.com/immich-
 - [Telegram Bot Setup](#telegram-bot-setup)
 - [Example Telegram Notification](#example-telegram-notification)
 - [Log Output](#log-output)
-- [Contributions](#contributions)
 
 ---
 
-## 📦 How the script works
+<h2 id="how-the-script-works">📦 How the script works</h2>
 
 This Bash script performs **incremental backups** of your Immich library using `rclone`, stores essential logs, and sends Telegram notifications with user-based statistics.
 
@@ -24,7 +23,7 @@ Each user's folder is backed up separately, and disk usage is calculated both gl
 
 ---
 
-## 🛠️ Installation
+<h2 id="installation">🛠️ Installation</h2>
 
 ### 1. Requirements
 
@@ -62,7 +61,7 @@ chmod +x backup_immich.sh
 
 ---
 
-## ⏰ Cronjob Setup
+<h2 id="cronjob-setup">⏰ Cronjob Setup</h2>
 
 To run the backup every day at 4:00 AM:
 
@@ -74,7 +73,7 @@ Logs are automatically rotated and deleted after 20 days.
 
 ---
 
-## 📬 Telegram Bot Setup
+<h2 id="telegram-bot-setup">📬 Telegram Bot Setup</h2>
 
 ### 1. Create the bot via BotFather
 - Open Telegram and search for `@BotFather`
@@ -128,7 +127,7 @@ Total: 2
 
 ---
 
-## 📄 Log Output
+<h2 id="log-output">📄 Log Output</h2>
 
 Each day, the script generates a minimal log at:
 
