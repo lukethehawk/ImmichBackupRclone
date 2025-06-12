@@ -1,6 +1,14 @@
 # ImmichBackupRclone
 An advanced rclone script for Immich
 
+## Index
+
+- [How the script works](#how-the-script-works)
+- [Installation](#installation)
+- [Cronjob Setup](#cronjob-setup)
+- [Telegram Bot Setup](#how-to-create-a-telegram-bot-with-botfather)
+
+
 
 # 📦 Immich Backup Automation
 
@@ -90,6 +98,63 @@ Each day a log is saved to `/root/log/log_immich_YYYY-MM-DD.txt`, containing onl
 - Final `Transferred`, `Checks`, `Elapsed time` summary
 
 ---
+
+## 🤖 How to Create a Telegram Bot with BotFather
+
+To receive backup notifications via Telegram, you'll need to create a bot and get its API token. Here's how:
+
+### 1. Start a Chat with BotFather
+- Open Telegram and search for `@BotFather`
+- Click **Start** or type `/start` to begin
+
+### 2. Create a New Bot
+- Send the command: `/newbot`
+- BotFather will ask you for:
+  - A **name** for your bot (e.g. `Immich Backup Bot`)
+  - A **username** that ends in `bot` (e.g. `immich_backup_bot`)
+
+### 3. Get Your Bot Token
+- Once created, BotFather will return an **API token** like this:
+
+    ```
+    123456789:ABCDefGhIJKlmNoPQRstuVWxyZ
+    ```
+
+- **Copy and save this token** — you'll need it for the script.
+
+### 4. Start the Bot
+- Open a chat with your new bot (use the link provided by BotFather)
+- Click **Start** to activate it
+
+### 5. Get Your Chat ID
+
+To receive messages, you'll also need your personal chat ID.
+
+#### Method A: Use Telegram API directly
+1. Visit:  
+   `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`  
+   (Replace `<YOUR_BOT_TOKEN>` with your actual token)
+2. Send a message to your bot on Telegram
+3. Reload the URL above
+4. Look for a section like:
+
+    ```json
+    "chat":{"id":123456789,...
+    ```
+
+   That number (`123456789`) is your **Chat ID**
+
+#### Method B (Alternative): Use @userinfobot
+- In Telegram, search for `@userinfobot`
+- Start it, and it will display your **user ID** (which is your Chat ID)
+
+### 6. Add Token and Chat ID to Your Script
+Edit the script and replace these lines:
+
+```bash
+BOT_TOKEN="your-telegram-bot-token"
+CHAT_ID="your-chat-id"
+
 
 ## 🤝 Contributions
 
