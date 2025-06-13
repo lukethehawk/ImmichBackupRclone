@@ -1,6 +1,6 @@
 # ImmichBackupRclone
 
-An advanced `rclone`-based backup script for [Immich](https://github.com/immich-app/immich), featuring multi-user support, Telegram notifications, and minimal logs. . At the moment this does not back up the config folders or anything else except the media folders.
+An advanced `rclone`-based backup script for [Immich](https://github.com/immich-app/immich), featuring multi-user support, Telegram notifications, and minimal logs. You can backup your database, Profile and Upload folders using the BackupEssentials script.
 
 
 
