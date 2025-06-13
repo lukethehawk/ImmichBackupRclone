@@ -27,7 +27,6 @@ CHAT_ID="INSERT_YOUR_CHAT_ID"							        # Telegram chat ID (insert your own)
 # Start rclone backup with parameters
 rclone sync "$SOURCE" "$DEST" \
 # --backup-dir="proton:Immich/archive/$(date +%F_%H-%M-%S)" \  # Optional: move deleted/modified files here instead of losing them. Useful for archival. Use only if you have enough space on your remote!
-  --ignore-existing \
   --drive-chunk-size 128M \
   --fast-list \
   --tpslimit 4 \
@@ -133,6 +132,13 @@ fi
   tail -100 "$TEMPLOGFILE" | grep -E 'Transferred:|Checks:|Elapsed time:'
 } > "$MAINLOGFILE"
 
+COMPACTLOGFILE="$LOGDIR/compact_log_immich.txt"
+{
+  grep 'Copied (new)' "$TEMPLOGFILE"
+  echo ""
+  grep -E 'Transferred:|Checks:|Elapsed time:' "$TEMPLOGFILE" | tail -n 3
+} > "$COMPACTLOGFILE"
+
 rm "$TEMPLOGFILE"
 
 # Clean up temporary log
@@ -147,4 +153,6 @@ curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendDocument" \
 # Send Telegram log file as document
   -F chat_id="$CHAT_ID" \
   -F caption="📎 Immich backup log - $(date)" \
-  -F document=@"$MAINLOGFILE"
+  -F document=@"$COMPACTLOGFILE"
+
+rm "$COMPACTLOGFILE"
