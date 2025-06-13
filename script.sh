@@ -25,7 +25,7 @@ CHAT_ID="INSERT_YOUR_CHAT_ID"							        # Telegram chat ID (insert your own)
 
 # === EXECUTE BACKUP ===
 # Start rclone backup with parameters
-rclone copy "$SOURCE" "$DEST" \
+rclone sync "$SOURCE" "$DEST" \
   --ignore-existing \
   --drive-chunk-size 128M \
   --fast-list \
