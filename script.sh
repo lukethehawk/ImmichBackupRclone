@@ -26,6 +26,7 @@ CHAT_ID="INSERT_YOUR_CHAT_ID"							        # Telegram chat ID (insert your own)
 # === EXECUTE BACKUP ===
 # Start rclone backup with parameters
 rclone sync "$SOURCE" "$DEST" \
+# --backup-dir="proton:Immich/archive/$(date +%F_%H-%M-%S)" \  # Optional: move deleted/modified files here instead of losing them. Useful for archival. Use only if you have enough space on your remote!
   --ignore-existing \
   --drive-chunk-size 128M \
   --fast-list \
@@ -101,6 +102,28 @@ Check the log file: $MAINLOGFILE"
   else
     MESSAGE="❌ Immich backup failed with unknown error on $(hostname). Manual check recommended."
   fi
+fi
+
+# === OPTIONAL: DELETE OLD ARCHIVE FOLDERS ===
+DELETE_OLD_ARCHIVES=false              # Set to true to enable archive cleanup
+ARCHIVE_PATH="proton:Immich/archive" # Path where --backup-dir saves deleted files
+KEEP_DAYS=30                          # Number of days to keep
+
+if [ "$DELETE_OLD_ARCHIVES" = true ]; then
+  # Get date threshold in seconds
+  THRESHOLD=$(date -d "$KEEP_DAYS days ago" +%s)
+
+  # List remote archive directories
+  rclone lsf "$ARCHIVE_PATH" --dirs-only | while read -r dir; do
+    # Remove trailing slash and extract timestamp from directory name
+    clean_dir=$(echo "$dir" | sed 's:/*$::')
+    dir_date=$(echo "$clean_dir" | cut -d_ -f1)  # Extract YYYY-MM-DD
+    dir_epoch=$(date -d "$dir_date" +%s 2>/dev/null)
+
+    if [ -n "$dir_epoch" ] && [ "$dir_epoch" -lt "$THRESHOLD" ]; then
+      rclone purge "$ARCHIVE_PATH/$clean_dir" || logger "Failed to delete $clean_dir from archive"
+    fi
+  done
 fi
 
 # === COMPACT LOG CREATION ===
