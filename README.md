@@ -1,6 +1,8 @@
 # ImmichBackupRclone
 
-An advanced `rclone`-based backup script for [Immich](https://github.com/immich-app/immich), featuring multi-user support, Telegram notifications, and minimal logs. This backup is media only. At the moment this does not back up the config folders or anything else except the media folders.
+An advanced `rclone`-based backup script for [Immich](https://github.com/immich-app/immich), featuring multi-user support, Telegram notifications, and minimal logs. . At the moment this does not back up the config folders or anything else except the media folders.
+
+
 
 ---
 
@@ -12,6 +14,7 @@ An advanced `rclone`-based backup script for [Immich](https://github.com/immich-
 - [Telegram Bot Setup](#telegram-bot-setup)
 - [Example Telegram Notification](#example-telegram-notification)
 - [Log Output](#log-output)
+- [Backup DB and essentials directories](#backup-essentials)
 
 ---
 
@@ -152,6 +155,20 @@ Checks:             16316 / 16316, 100%
 Transferred:            2 / 2, 100%
 Elapsed time:     28m38.5s
 ```
+
+---
+
+<h2 id="backup-essentials"> 🧠 Backup of Immich Database and Additional Folders (upload, profile)</h2>
+
+To ensure full backup coverage beyond the media library, you may also want to include:
+
+    The PostgreSQL database (user data, metadata)
+
+    The upload folder (temporary media)
+
+    The profile folder (user profile images and other config assets)
+
+Download and run the BackupEssentials.sh
 
 ---
 
