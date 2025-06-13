@@ -56,6 +56,7 @@ Your Immich library must follow this format:
   - `DEST` (e.g. `proton:Immich`)
 - Replace `user1_folder` and `user2_folder` with actual user folders
 - Add your `BOT_TOKEN` and `CHAT_ID`
+- Activate the optional `--backup-dir` funcion with automatic deletion of older directories
 
 ### Make the script executable:
 ```bash
